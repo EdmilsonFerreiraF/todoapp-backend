@@ -12,7 +12,6 @@ export default class BaseDatabase {
     { useNewUrlParser: true, useUnifiedTopology: true });
 
   protected static closeConnection = function() {
-    // any other clean ups
     mongoose.connection.close(function () {
       console.log('Mongoose connection disconnected');
     });
