@@ -23,7 +23,7 @@ export class UserBusiness {
          if (
             !input.firstName ||
             !input.lastName ||
-            !input.nickname ||
+            !input.username ||
             !input.email ||
             !input.password
          ) {
@@ -47,7 +47,7 @@ export class UserBusiness {
                id,
                input.firstName,
                input.lastName,
-               input.nickname,
+               input.username,
                input.email,
                cypherPassword
             )
@@ -55,7 +55,7 @@ export class UserBusiness {
 
          const token = this.tokenGenerator.generate({
             id,
-            nickname: input.nickname
+            username: input.username
          });
 
          return { token };

@@ -7,14 +7,14 @@ export interface User {
     firstName: string,
     lastName: string,
     email: string,
-    nickname: string,
+    username: string,
     password: string
 };
 
 export type SignupInputDTO = {
     firstName: string,
     lastName: string,
-    nickname: string,
+    username: string,
     email: string,
     password: string
 };

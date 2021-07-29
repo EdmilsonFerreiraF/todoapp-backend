@@ -10,7 +10,7 @@ export class TokenGenerator {
     const newToken = jwt.sign(
       {
         id: input.id,
-        nickname: input.nickname
+        username: input.username
       },
       process.env.JWT_KEY as string,
       {
@@ -23,7 +23,7 @@ export class TokenGenerator {
 
   public verify(token: string) {
     const payload = jwt.verify(token, process.env.JWT_KEY as string) as any;
-    const result = { id: payload.id, nickname: payload.nickname };
+    const result = { id: payload.id, username: payload.username };
 
     return result;
   };
@@ -31,7 +31,7 @@ export class TokenGenerator {
 
 export interface AuthenticationData {
   id: string,
-  nickname: string
+  username: string
 };
 
 export default new TokenGenerator();

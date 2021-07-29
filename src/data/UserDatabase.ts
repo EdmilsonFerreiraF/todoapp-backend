@@ -11,7 +11,7 @@ export class UserDatabase extends BaseDatabase {
       id: String,
       firstName: String,
       lastName: String,
-      nickname: String,
+      username: String,
       email: {
          type: String,
          unique: true
@@ -25,7 +25,7 @@ export class UserDatabase extends BaseDatabase {
             id: input.getId(),
             firstName: input.getFirstName(),
             lastName: input.getLastName(),
-            nickname: input.getNickname(),
+            username: input.getUsername(),
             email: input.getEmail(),
             password: input.getPassword(),
          };
