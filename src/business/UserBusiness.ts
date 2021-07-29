@@ -6,7 +6,7 @@ import { User } from "../data/model/User";
 import { UserDatabase } from "../data/UserDatabase";
 
 import { CustomError } from "../errors/CustomError";
-import { SignupInputDTO } from "./entities/user";
+import { LoginInputDTO, SignupInputDTO } from "./entities/user";
 
 export class UserBusiness {
    constructor(
@@ -56,6 +56,38 @@ export class UserBusiness {
          const token = this.tokenGenerator.generate({
             id,
             username: input.username
+         });
+
+         return { token };
+      } catch (error) {
+         throw new CustomError(error.statusCode, error.message);
+      };
+   };
+
+   public async getUserByEmail(input: LoginInputDTO) {
+      try {
+         if (!input.email || !input.password) {
+            throw new CustomError(422, "Missing input");
+         };
+
+         const user = await this.userDatabase.getUserByEmail(input);
+
+         if (!user) {
+            throw new CustomError(401, "Invalid credentials");
+         };
+
+         const isPasswordCorrect = await this.hashGenerator.compareHash(
+            input.password,
+            user.getPassword()
+         );
+
+         if (!isPasswordCorrect) {
+            throw new CustomError(401, "Invalid credentials");
+         };
+
+         const token = this.tokenGenerator.generate({
+            id: user.getId(),
+            username: user.getUsername()
          });
 
          return { token };

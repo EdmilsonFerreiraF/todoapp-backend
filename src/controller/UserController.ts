@@ -7,7 +7,7 @@ import { TokenGenerator } from "../business/services/tokenGenerator";
 import { UserBusiness } from "../business/UserBusiness";
 import { UserDatabase } from "../data/UserDatabase";
 
-import { SignupInputDTO } from "../business/entities/user";
+import { LoginInputDTO, SignupInputDTO } from "../business/entities/user";
 
 const userBusiness =
  new UserBusiness(new IdGenerator(),
@@ -36,6 +36,24 @@ export class UserController {
          res.status(200).send(result);
       } catch (error) {
          const { statusCode, message } = error;
+         res.status(statusCode || 400).send({ message });
+      };
+   };
+
+   public async getUserByEmail(req: Request, res: Response) {
+      try {
+         const { email, password } = req.body;
+
+         const input: LoginInputDTO = {
+            email,
+            password
+         }
+
+         const result = await userBusiness.getUserByEmail(input);
+
+         res.status(200).send(result);
+      } catch (error) {
+         const { statusCode, message } = error
          res.status(statusCode || 400).send({ message });
       };
    };
