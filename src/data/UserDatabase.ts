@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { LoginInputDTO } from "../business/entities/user";
 const { Schema } = mongoose;
 
 import BaseDatabase from "./BaseDatabase";
@@ -19,6 +20,20 @@ export class UserDatabase extends BaseDatabase {
       password: String
    });
 
+   private toModel(dbModel?: any): User {
+      return (
+         dbModel &&
+         new User(
+            dbModel.id,
+            dbModel.firstName,
+            dbModel.lastName,
+            dbModel.username,
+            dbModel.email,
+            dbModel.password
+         )
+      );
+   };
+
    public async createUser(input: User): Promise<void> {
       try {
          const userDocument = {
@@ -35,6 +50,18 @@ export class UserDatabase extends BaseDatabase {
          const NewUser = new UserModel(userDocument);
 
          NewUser.save();
+      } catch (error) {
+         throw new Error(error.statusCode);
+      };
+   };
+
+   public async getUserByEmail(input: LoginInputDTO): Promise<User> {
+      try {
+         const conn = await BaseDatabase.connection;
+         const UserModel = conn.model('users2', this.blogSchema);
+         const user = await UserModel.where({email: input.email}).findOne({}).exec();
+
+         return this.toModel(user);
       } catch (error) {
          throw new Error(error.statusCode);
       };
