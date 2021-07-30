@@ -43,11 +43,8 @@ export class Task {
   };
 };
 
-export interface InputData {
-  title: string,
-}
 export interface TaskInputDTO {
-  inputData: InputData,
+  title: string,
   token: string,
 };
 
