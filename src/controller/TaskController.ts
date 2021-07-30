@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { IdGenerator } from "../business/services/idGenerator";
 import { TokenGenerator } from "../business/services/tokenGenerator";
 import { TaskBusiness } from "../business/TaskBusiness";
-import { getTaskInputDTO, TaskInputDTO } from "../data/model/Task";
+import { TaskInputDTO } from "../data/model/Task";
 import { TaskDatabase } from "../data/TaskDatabase";
 
 const taskBusiness =
@@ -24,6 +24,8 @@ export class TaskController {
             title: input.title,
             token: input.token
          });
+
+         res.status(200).send("Task created successfully");
       } catch (error) {
          const { statusCode, message } = error;
          console.log(statusCode || 400,{ message });
