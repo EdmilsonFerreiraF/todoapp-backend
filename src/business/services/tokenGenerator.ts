@@ -4,7 +4,7 @@ import * as jwt from "jsonwebtoken";
 dotenv.config();
 
 export class TokenGenerator {
-  private static expiresIn: number = Number(process.env.ACCESS_TOKEN_EXPIRES_IN);
+  private static expiresIn: number = Number(process.env.JWT_ACCESS_TOKEN_EXPIRES_IN);
 
   public generate = (input: AuthenticationData): string => {
     const newToken = jwt.sign(
@@ -12,7 +12,7 @@ export class TokenGenerator {
         id: input.id,
         username: input.username
       },
-      process.env.JWT_KEY as string,
+      process.env.JWT_ACCESS_TOKEN_SECRET as string,
       {
         expiresIn: TokenGenerator.expiresIn,
       }
@@ -22,7 +22,7 @@ export class TokenGenerator {
   };
 
   public verify(token: string) {
-    const payload = jwt.verify(token, process.env.JWT_KEY as string) as any;
+    const payload = jwt.verify(token, process.env.JWT_ACCESS_TOKEN_SECRET as string) as any;
     const result = { id: payload.id, username: payload.username };
 
     return result;
