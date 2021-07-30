@@ -1,8 +1,8 @@
 export class Task {
   constructor(
-    private id: string = '',
+    private id: string,
     private userId: string,
-    private title: string = '',
+    private title: string,
     private repeat: string[] = [''],
     private reminder: string = '',
     private expiresAt: string = '',
