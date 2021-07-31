@@ -8,14 +8,20 @@ export class TaskDatabase extends BaseDatabase {
    protected tableName: string = "task";
    protected taskSchema = new Schema({
       id: String,
-      userId: String,
       title: String,
-      repeat: [],
-      reminder: [],
-      expiresAt: Date,
-      subtasks: [],
-      isFinished: Boolean
-    });
+      userId: String,
+      tasks: [
+         {
+            id: String,
+            title: String,
+            repeat: [],
+            reminder: String,
+            expiresAt: Date,
+            subtasks: [],
+            isFinished: false
+         }
+      ]
+   });
 
    public async createTask(task: Task): Promise<void> {
       try {
